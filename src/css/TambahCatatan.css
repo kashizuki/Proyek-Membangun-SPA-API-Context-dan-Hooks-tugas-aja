@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Stylesheet Halaman Tambah Catatan (TambahCatatan.css)
+   Tema diselaraskan sepenuhnya dengan tema Catatan.css
+   ========================================================================== */
+
+/* 1. RESET & GLOBAL STYLES */
+.add-new-page,
+body {
+  background-color: #ffffff;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* 2. AREA KONTEN UTAMA (<main>) */
+main {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 16px 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input Judul Catatan */
+main input[type='text'],
+.add-new-page__input__title {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background-color: #e8e8e8;
+  border: 1px solid #888888;
+  border-radius: 6px;
+  color: #222222;
+  margin-bottom: 20px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+main input[type='text']::placeholder,
+.add-new-page__input__title::placeholder {
+  color: #777777;
+  font-weight: 500;
+}
+
+main input[type='text']:focus,
+.add-new-page__input__title:focus {
+  border-color: #222222;
+  background-color: #ffffff;
+}
+
+/* Textarea Isi Catatan - Dibuat Besar (Panjang dan Lebarnya) */
+main textarea,
+.add-new-page__input__body {
+  width: 100%;
+  min-height: 420px;
+  padding: 18px 20px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  background-color: #e8e8e8;
+  border: 1px solid #888888;
+  border-radius: 6px;
+  color: #333333;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+main textarea::placeholder,
+.add-new-page__input__body::placeholder {
+  color: #777777;
+}
+
+main textarea:focus,
+.add-new-page__input__body:focus {
+  border-color: #222222;
+  background-color: #ffffff;
+}
+
+/* 4. TOMBOL CENTANG SIMPAN (FAB) - Di Bawah Kanan */
+main button[aria-label='Simpan catatan'],
+.add-new-page__action {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 54px;
+  height: 54px;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  z-index: 100;
+}
+
+main button[aria-label='Simpan catatan']:hover,
+.add-new-page__action:hover {
+  background-color: #444444;
+  transform: scale(1.05);
+}
+
+main button[aria-label='Simpan catatan']:disabled,
+.add-new-page__action:disabled {
+  background-color: #888888;
+  cursor: not-allowed;
+  transform: none;
+}

@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Stylesheet Halaman Catatan Arsip (Terarsip.css)
+   Tema diselaraskan sepenuhnya dengan tema Catatan.css
+   ========================================================================== */
+
+/* 1. RESET & GLOBAL STYLES */
+.archives-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    color: #222222;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.archives-page a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* 2. KONTEN UTAMA (<main>) */
+.archives-page__main,
+.archives-page main {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 32px 16px;
+    flex: 1;
+}
+
+.archives-page__title,
+.archives-page main h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #222222;
+}
+
+/* 4. INPUT PENCARIAN (Search Bar Full Width) */
+.archives-page__search-input,
+.archives-page main>input[type='text'] {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #e8e8e8;
+    border: 1px solid #888888;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: #333333;
+    margin-bottom: 32px;
+    outline: none;
+}
+
+.archives-page__search-input::placeholder,
+.archives-page main>input[type='text']::placeholder {
+    color: #666666;
+}
+
+.archives-page__search-input:focus,
+.archives-page main>input[type='text']:focus {
+    border-color: #222222;
+    background-color: #ffffff;
+}
+
+/* 5. DAFTAR KARTU CATATAN (Notes Grid & Cards) */
+.archives-page__notes-list,
+.archives-page main>section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Kartu Catatan Arsip dengan border atas tebal */
+.archives-page__note-item,
+.archives-page article {
+    background-color: #e8e8e8;
+    border: 1px solid #444444;
+    border-top: 5px solid #222222;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.archives-page__note-title,
+.archives-page article h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.archives-page__note-title a,
+.archives-page article h3 a {
+    color: #222222;
+    text-decoration: underline;
+}
+
+.archives-page__note-date,
+.archives-page article p:nth-child(2) {
+    font-size: 0.85rem;
+    color: #666666;
+    margin: 0;
+}
+
+.archives-page__note-body,
+.archives-page article p:nth-child(3) {
+    font-size: 0.95rem;
+    color: #333333;
+    line-height: 1.4;
+    margin-top: 4px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 6. STATUS TAMPILAN (Loading & Empty State) */
+.archives-page__status,
+.archives-page__empty,
+.archives-page p.empty-message,
+.archives-page p.loading-message {
+    text-align: center;
+    color: #666666;
+    font-size: 1.1rem;
+    margin-top: 40px;
+}

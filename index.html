@@ -1,10 +1,22 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>proyek-membangun-spa</title>
+    <title>Aplikasi Catatan</title>
+    <!-- Anti-flicker: terapkan tema & bahasa sebelum render React agar tidak ada kilat tema terang -->
+    <script>
+      (function () {
+        var theme = localStorage.getItem('theme');
+        if (theme !== 'light' && theme !== 'dark') theme = 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+
+        var locale = localStorage.getItem('locale');
+        if (locale !== 'id' && locale !== 'en') locale = 'id';
+        document.documentElement.setAttribute('lang', locale);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,426 +1,152 @@
-# Dokumentasi Proyek: Aplikasi Catatan (SPA)
+# Aplikasi Catatan (SPA)
 
-Dokumentasi ini mencatat progres pengerjaan proyek Single Page Application (SPA) Aplikasi Catatan.
-
----
-
-## 📌 Progres Pengerjaan Saat Ini
-**Tahap: Implementasi Logic Login & Register + Proteksi Rute Autentikasi + Halaman Catatan**
-
-Mengacu pada *PRD Sederhana: Logic Login dan Register*, pada tahap ini telah diimplementasikan fungsionalitas dan logika penuh pada aplikasi:
-1. **Custom Hook `useInput`**: Menangani controlled component pada seluruh input form (Login & Register) agar logic tidak berulang.
-2. **Logic Register (`RegisterPage.jsx`)**: Validasi client-side (kesesuaian Password dan Confirm Password), pemanggilan API `register`, pencegahan request ganda, serta navigasi otomatis ke halaman login setelah berhasil.
-3. **Logic Login (`LoginPage.jsx`)**: Pemanggilan API `login`, penyimpanan `accessToken` ke localStorage via `putAccessToken`, pemanggilan `getUserLogged()`, dan pengalihan ke halaman utama.
-4. **State Autentikasi & Proteksi Rute (`App.jsx`)**:
-   - Pengecekan token saat aplikasi pertama kali dimuat via `useEffect` dan `getUserLogged()`.
-   - Indikator `initializing` ("Memuat...") untuk mencegah tampilan berkedip.
-   - Proteksi rute: pengguna belum login hanya dapat mengakses `/` (Login) dan `/register`. Pengguna yang sudah login langsung diarahkan ke halaman **Catatan**.
-   - Fungsionalitas **Logout**: mengosongkan token dan mereset state autentikasi.
-5. **Halaman Utama (`Catatan.jsx`)**: Menampilkan nama pengguna yang sedang aktif, tombol logout, dan teks `"hello world"`.
+Single Page Application (SPA) manajemen catatan berbasis **React**, **Vite**, dan **React Router**, terintegrasi dengan REST API Dicoding Notes API. Aplikasi ini mendukung autentikasi pengguna, manajemen catatan aktif & arsip, tema Dark/Light Mode, alih bahasa (Indonesia/Inggris), serta indikasi loading interaktif.
 
 ---
 
-## 📁 Struktur Berkas Terkait
+## 🚀 Fitur Utama
+
+1. **Autentikasi Pengguna**:
+   - Pendaftaran akun baru (*Register*) dengan validasi kecocokan kata sandi.
+   - Masuk akun (*Login*) dan penyimpanan access token secara persisten di `localStorage`.
+   - Proteksi rute navigasi (hanya halaman Login dan Register yang dapat diakses pengguna belum login; halaman catatan terproteksi penuh).
+   - Keluar akun (*Logout*) dengan pembersihan token dan reset sesi aplikasi.
+   - *Catatan*: Penanganan respons dan pesan error autentikasi berasal langsung dari berkas `src/utils/network-data.js` (berkas bawaan Dicoding).
+
+2. **Manajemen Catatan (CRUD)**:
+   - **Catatan Aktif**: Menampilkan seluruh catatan aktif yang diurutkan dari yang terbaru, dilengkapi pencarian judul secara *real-time* (*client-side filter*).
+   - **Catatan Arsip**: Halaman khusus untuk menampilkan catatan yang telah diarsipkan, dilengkapi kolom pencarian judul.
+   - **Tambah Catatan**: Membuat catatan baru dengan judul dan isi melalui fungsi API `addNote`.
+   - **Detail Catatan**: Membaca catatan lengkap dengan format tanggal terstandarisasi.
+   - **Arsipkan & Aktifkan Kembali**: Memindahkan catatan antara daftar aktif dan arsip.
+   - **Hapus Catatan**: Menghapus catatan permanen dengan konfirmasi pengguna (*window.confirm*).
+
+3. **Tema Dark Mode & Light Mode**:
+   - Dikelola melalui React Context (`ThemeContext`) dan custom hook (`useTheme`).
+   - Tombol toggle tema (`ThemeToggle`) tersedia pada `Navbar` di seluruh halaman aplikasi.
+   - Persistensi tema di `localStorage` dan pencegahan kedipan tema (*anti-flicker*) saat halaman di-refresh via inline script di `index.html`.
+   - Atribut `data-theme` otomatis diterapkan pada elemen root `<html>`.
+
+4. **Fitur Ubah Bahasa (Multibahasa ID / EN)**:
+   - Dikelola melalui React Context (`LocaleContext`) dan custom hook (`useLocale`).
+   - Mendukung dua bahasa: **Indonesia (ID)** dan **Inggris (EN)**.
+   - Seluruh teks antarmuka (UI), tombol, placeholder, pesan status, tooltip, aria-label, konfirmasi, dan alert mengambil nilai dari kamus terjemahan via fungsi `t()`.
+   - Persistensi bahasa pilihan pengguna di `localStorage` serta sinkronisasi atribut `lang` pada `<html>`.
+
+5. **Indikasi Loading Interaktif**:
+   - Indikator memuat saat inisialisasi sesi aplikasi, memuat daftar catatan, memuat detail catatan, serta saat submit form login, register, dan tambah catatan.
+   - Tombol aksi mengambang (FAB) arsip dan hapus pada halaman detail dinonaktifkan (*disabled*) selama proses request berlangsung untuk mencegah *double submit*.
+
+---
+
+## 🛠️ Tech Stack & Versi
+
+- **React**: `^19.2.8`
+- **React DOM**: `^19.2.8`
+- **React Router DOM**: `^7.18.4`
+- **Vite**: `^8.3.0`
+- **ESLint**: `^10.10.0`
+- **Styling**: Vanilla CSS & CSS Variables (Global Theme)
+
+---
+
+## 🌐 REST API Endpoints
+
+Aplikasi terhubung ke backend Dicoding Notes API:
+- **Base URL**: `https://notes-api.dicoding.dev/v1`
+- **Interaksi Jaringan**: Ditangani oleh berkas bawaan Dicoding `src/utils/network-data.js`.
+
+---
+
+## 💻 Cara Menjalankan Proyek
+
+Pastikan Node.js telah terpasang di komputer Anda.
+
+1. **Instalasi Dependensi**:
+   ```bash
+   npm install
+   ```
+
+2. **Menjalankan Server Pengembangan (Dev Server)**:
+   ```bash
+   npm run dev
+   ```
+   Buka peramban di alamat yang tertera (biasanya `http://localhost:5173`).
+
+3. **Menjalankan Pengecekan Kualitas Kode (Linting)**:
+   ```bash
+   npm run lint
+   ```
+
+4. **Membangun Bundle Produksi**:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📂 Struktur Direktori Proyek
+
 ```text
-src/
-├── hooks/
-│   └── useInput.js        # Custom hook untuk controlled input form
-├── pages/
-│   ├── LoginPage.jsx      # Halaman Login (controlled input, API login, navigasi)
-│   ├── RegisterPage.jsx   # Halaman Register (validasi password, API register, redirect)
-│   └── Catatan.jsx        # Halaman Catatan (halaman utama saat login: "hello world" & logout)
-├── utils/
-│   ├── network-data.js    # Utilitas API (login, register, getUserLogged, token)
-│   └── local-data.js      # Utilitas data lokal
-├── App.jsx                # Manajemen state autentikasi, handler login/logout, rute
-└── main.jsx               # Entry point aplikasi (BrowserRouter & createRoot)
+├── index.html                  # Template HTML dengan script anti-flicker tema & bahasa
+├── package.json                # Konfigurasi dependensi dan skrip proyek
+├── src/
+│   ├── App.jsx                 # Komponen root: autentikasi, proteksi rute, dan navigasi SPA
+│   ├── index.css               # Styling global, impor theme.css, dan styling terpadu Navbar
+│   ├── main.jsx                # Entry point: BrowserRouter, ThemeProvider, LocaleProvider
+│   ├── components/
+│   │   ├── Navbar.jsx          # Komponen navigasi bersama untuk semua halaman (logo, link, toggle, user, logout)
+│   │   ├── NoteCard.jsx        # Komponen kartu catatan bersama untuk Catatan dan Terarsip
+│   │   └── ThemeToggle.jsx     # Tombol interaktif pengalih mode terang/gelap
+│   ├── contexts/
+│   │   ├── LocaleContext.js    # Konteks bahasa dan kamus terjemahan (id & en)
+│   │   ├── LocaleProvider.jsx  # Provider bahasa dengan persistensi localStorage & sinkronisasi html lang
+│   │   ├── ThemeContext.js     # Konteks tema global ('light' | 'dark')
+│   │   └── ThemeProvider.jsx   # Provider tema dengan validasi nilai & sinkronisasi html data-theme
+│   ├── css/
+│   │   ├── BacaCatatan.css     # Styling khusus halaman detail catatan dan FAB aksi
+│   │   ├── Catatan.css         # Styling halaman catatan aktif, search bar, dan FAB tambah
+│   │   ├── LoginRegister.css   # Styling form autentikasi halaman login dan register
+│   │   ├── TambahCatatan.css   # Styling formulir pembuatan catatan baru dan tombol simpan
+│   │   ├── Terarsip.css        # Styling halaman catatan arsip dan grid kartu
+│   │   └── theme.css           # Variabel warna CSS dan aturan penataan mode gelap global
+│   ├── hooks/
+│   │   ├── useInput.js         # Custom hook untuk controlled input pada formulir & pencarian
+│   │   ├── useLocale.js        # Custom hook untuk mengakses state bahasa, fungsi toggle, dan helper t()
+│   │   └── useTheme.js         # Custom hook untuk mengakses state tema dan fungsi pengalih tema
+│   ├── pages/
+│   │   ├── BacaCatatan.jsx     # Halaman detail catatan (baca, arsipkan/aktifkan kembali, hapus)
+│   │   ├── Catatan.jsx         # Halaman utama catatan aktif (pencarian, daftar NoteCard, navigasi tambah)
+│   │   ├── LoginPage.jsx       # Halaman login pengguna
+│   │   ├── RegisterPage.jsx    # Halaman pendaftaran akun pengguna baru
+│   │   ├── TambahCatatan.jsx   # Halaman tambah catatan baru (addNote)
+│   │   └── Terarsip.jsx        # Halaman catatan terarsip (pencarian, daftar NoteCard)
+│   └── utils/
+│       ├── helpers.js          # Fungsi utilitas formatDate tunggal untuk format tanggal Indonesia
+│       └── network-data.js     # Modul jaringan bawaan Dicoding untuk interaksi API
 ```
 
 ---
 
-## 🛠️ Rincian Implementasi & Dokumentasi Kode
+## ✅ Checklist Kriteria Penerimaan
 
-### 1. Custom Hook `useInput` (`src/hooks/useInput.js`)
-Hook kustom untuk menyederhanakan pengelolaan state input teks pada komponen form.
-
-```javascript
-import { useState } from 'react';
-
-// Custom hook useInput untuk menangani input form bertipe controlled component
-function useInput(defaultValue = '') {
-  const [value, setValue] = useState(defaultValue);
-
-  function handleValueChange(event) {
-    setValue(event.target.value);
-  }
-
-  return [value, handleValueChange];
-}
-
-export default useInput;
-```
+- [x] **Konsistensi Penamaan**: Berkas dan komponen menggunakan nama baku `Terarsip.jsx`, `Terarsip.css`, dan `LoginRegister.css`. Tidak ada lagi penamaan "Terasip" di seluruh kode.
+- [x] **Komponen Navbar Bersama**: Seluruh 6 halaman menggunakan komponen `Navbar.jsx` bersama yang konsisten.
+- [x] **Aksesibilitas & Struktur Elemen**: Tidak ada elemen `<button>` bersarang di dalam `<Link>` (atau sebaliknya) di seluruh aplikasi.
+- [x] **Visibilitas ThemeToggle**: Tombol tema tampil dan berfungsi di semua halaman, termasuk halaman publik (Login & Register).
+- [x] **Pencegahan Kedipan Tema (Anti-Flicker)**: Skrip inline di `index.html` membaca tema dari `localStorage` sebelum React render.
+- [x] **Komponen Kartu Bersama (`NoteCard`)**: Halaman Catatan Aktif dan Catatan Arsip menggunakan komponen `NoteCard.jsx` yang sama.
+- [x] **Standarisasi Format Tanggal**: Menggunakan satu fungsi terpusat `formatDate` di `src/utils/helpers.js` yang dipakai oleh `NoteCard` dan `BacaCatatan`.
+- [x] **Pembersihan Elemen Obsolete**: Elemen pembantu `#assistant-icon` pada `RegisterPage` yang tidak memiliki style telah dihapus.
+- [x] **Fitur Multibahasa (Opsional 2)**: Beralih bahasa (ID / EN) secara dinamis, seluruh teks UI memakai kamus bahasa terpusat, dan preferensi tersimpan di `localStorage`.
+- [x] **Indikasi Loading (Opsional 1)**: Indikator loading pada saat memuat data, submit formulir, dan tombol FAB aksi dinonaktifkan selama pemrosesan request.
+- [x] **Kualitas Kode**: Lolos validasi `npm run lint` dengan 0 error dan 0 warning, serta lolos `npm run build` produksi.
 
 ---
 
-### 2. Status Autentikasi & Rute Utama (`src/App.jsx`)
-Mengelola state `authedUser` dan `initializing`, memverifikasi token pengguna, serta memisahkan rute publik dan terproteksi.
+## 📝 Catatan Progres & Pembaruan
 
-```jsx
-import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import Catatan from './pages/Catatan';
-import { getUserLogged, putAccessToken } from './utils/network-data';
-
-// Komponen utama aplikasi yang mengelola state autentikasi dan routing aplikasi
-function App() {
-  // A1: State authedUser (data pengguna terautentikasi) dan initializing (status inisialisasi awal)
-  const [authedUser, setAuthedUser] = useState(null);
-  const [initializing, setInitializing] = useState(true);
-
-  // A2: Pengecekan token saat aplikasi pertama kali dimuat
-  useEffect(() => {
-    async function fetchUser() {
-      const { data } = await getUserLogged();
-      setAuthedUser(data);
-      setInitializing(false);
-    }
-
-    fetchUser();
-  }, []);
-
-  // Handler saat login berhasil: simpan accessToken dan set data pengguna
-  async function onLoginSuccess({ accessToken }) {
-    putAccessToken(accessToken);
-    const { data } = await getUserLogged();
-    setAuthedUser(data);
-  }
-
-  // Handler logout: kosongkan token di localStorage dan reset state authedUser
-  function onLogout() {
-    putAccessToken('');
-    setAuthedUser(null);
-  }
-
-  // A3: Tampilkan teks memuat saat masih dalam proses inisialisasi agar halaman tidak berkedip
-  if (initializing) {
-    return <p>Memuat...</p>;
-  }
-
-  // A4: Jika pengguna belum login (authedUser === null), hanya rute login dan register yang tersedia
-  if (authedUser === null) {
-    return (
-      <Routes>
-        <Route
-          path="/"
-          element={<LoginPage onLoginSuccess={onLoginSuccess} />}
-        />
-        <Route path="/register" element={<RegisterPage />} />
-        {/* Mengarahkan rute yang tidak dikenal kembali ke halaman login */}
-        <Route path="/*" element={<Navigate to="/" replace />} />
-      </Routes>
-    );
-  }
-
-  // A5: Jika pengguna sudah login, langsung diarahkan ke halaman Catatan
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={<Catatan authedUser={authedUser} onLogout={onLogout} />}
-      />
-      {/* Pengguna yang sudah login diarahkan ke halaman utama jika membuka rute lain seperti /register */}
-      <Route path="/*" element={<Navigate to="/" replace />} />
-    </Routes>
-  );
-}
-
-export default App;
-```
-
----
-
-### 3. Halaman Login (`src/pages/LoginPage.jsx`)
-Menggunakan `useInput` untuk mengontrol input email dan password, memanggil fungsi API `login()`, serta mencegah request ganda via state `loading`.
-
-```jsx
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import useInput from '../hooks/useInput';
-import { login } from '../utils/network-data';
-
-// Komponen fungsional untuk Halaman Login Aplikasi Catatan
-// Dilengkapi logic controlled input, submit handler, dan pemanggilan API login
-function LoginPage({ onLoginSuccess }) {
-  // Controlled input hooks menggunakan custom hook useInput
-  const [email, handleEmailChange] = useInput('');
-  const [password, handlePasswordChange] = useInput('');
-  const [loading, setLoading] = useState(false);
-
-  // Handler saat form login disubmit
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setLoading(true);
-
-    // Memanggil API login dari network-data.js
-    const { error, data } = await login({ email, password });
-
-    setLoading(false);
-
-    // Jika berhasil (tidak error), teruskan data token ke handler onLoginSuccess di App
-    if (!error) {
-      onLoginSuccess(data);
-    }
-  }
-
-  return (
-    <div>
-      {/* 1. Header: Judul aplikasi */}
-      <header>
-        <h1>Aplikasi Catatan</h1>
-      </header>
-
-      {/* Konten Utama */}
-      <main>
-        {/* 2. Pesan ajakan login */}
-        <p>Yuk, login untuk menggunakan aplikasi.</p>
-
-        {/* 3. Form Login */}
-        <form onSubmit={handleSubmit}>
-          {/* Kolom input Email */}
-          <div>
-            <label htmlFor="email">Email</label>
-            <br />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              size="40"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
-          </div>
-
-          {/* Kolom input Password */}
-          <div>
-            <label htmlFor="password">Password</label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              size="40"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-
-          {/* 4. Tombol submit Login (disabled saat proses loading untuk cegah request ganda) */}
-          <button type="submit" disabled={loading}>
-            {loading ? 'Memuat...' : 'Login'}
-          </button>
-        </form>
-
-        {/* 5. Tautan navigasi SPA ke halaman registrasi */}
-        <p>
-          Belum punya akun? <Link to="/register">Daftar di sini</Link>
-        </p>
-      </main>
-    </div>
-  );
-}
-
-export default LoginPage;
-```
-
----
-
-### 4. Halaman Register (`src/pages/RegisterPage.jsx`)
-Menggunakan `useInput` untuk 4 field (name, email, password, confirmPassword), melakukan validasi kesamaan kata sandi, dan memanggil API `register()`.
-
-```jsx
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useInput from '../hooks/useInput';
-import { register } from '../utils/network-data';
-
-// Komponen fungsional untuk Halaman Register Aplikasi Catatan
-// Dilengkapi controlled input, validasi client, submit handler, dan redirect
-function RegisterPage() {
-  const navigate = useNavigate();
-
-  // Controlled input hooks menggunakan useInput
-  const [name, handleNameChange] = useInput('');
-  const [email, handleEmailChange] = useInput('');
-  const [password, handlePasswordChange] = useInput('');
-  const [confirmPassword, handleConfirmPasswordChange] = useInput('');
-  const [loading, setLoading] = useState(false);
-
-  // Handler saat form registrasi disubmit
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    // R3: Validasi client side - password dan confirm password harus cocok
-    if (password !== confirmPassword) {
-      alert('Password dan Confirm Password tidak sama');
-      return;
-    }
-
-    setLoading(true);
-
-    // R4: Memanggil API register dari network-data.js (confirmPassword tidak dikirim)
-    const { error } = await register({ name, email, password });
-
-    setLoading(false);
-
-    // R6: Jika sukses, arahkan pengguna ke halaman login ('/')
-    if (!error) {
-      navigate('/');
-    }
-  }
-
-  return (
-    <div>
-      {/* 1. Header: Judul aplikasi (identik dengan Halaman Login) */}
-      <header>
-        <h1>Aplikasi Catatan</h1>
-      </header>
-
-      {/* 2. Bagian Utama / Form Registrasi */}
-      <main>
-        {/* Instruksi Form (Teks tebal di atas form) */}
-        <p>
-          <strong>Isi form untuk mendaftar akun.</strong>
-        </p>
-
-        {/* Formulir Pendaftaran */}
-        <form onSubmit={handleSubmit}>
-          {/* Kolom input Name */}
-          <div>
-            <label htmlFor="name">Name</label>
-            <br />
-            <input
-              type="text"
-              id="name"
-              name="name"
-              size="40"
-              value={name}
-              onChange={handleNameChange}
-              required
-            />
-          </div>
-
-          {/* Kolom input Email */}
-          <div>
-            <label htmlFor="email">Email</label>
-            <br />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              size="40"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
-          </div>
-
-          {/* Kolom input Password */}
-          <div>
-            <label htmlFor="password">Password</label>
-            <br />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              size="40"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-          </div>
-
-          {/* Kolom input Confirm Password */}
-          <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <br />
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              size="40"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              required
-            />
-          </div>
-
-          {/* Tombol submit Register (disabled saat loading untuk cegah request ganda) */}
-          <button type="submit" disabled={loading}>
-            {loading ? 'Memuat...' : 'Register'}
-          </button>
-        </form>
-
-        {/* 3. Tautan navigasi SPA kembali ke Halaman Login */}
-        <p>
-          Sudah punya akun? <Link to="/">Login di sini</Link>
-        </p>
-
-        {/* 4. Ikon Asisten / Floating Widget (elemen visual div, styling diterapkan pada tahap CSS) */}
-        <div id="assistant-icon" aria-label="Ikon Asisten">
-          {/* Ikon asisten visual */}
-        </div>
-      </main>
-    </div>
-  );
-}
-
-export default RegisterPage;
-```
-
----
-
-### 5. Halaman Catatan (`src/pages/Catatan.jsx`)
-Komponen halaman utama yang tampil ketika pengguna telah login.
-
-```jsx
-// Komponen Halaman Catatan (Halaman Utama saat pengguna telah terautentikasi / login)
-function Catatan({ authedUser, onLogout }) {
-  return (
-    <div>
-      <header>
-        <h1>Aplikasi Catatan</h1>
-        {/* Menampilkan nama pengguna yang terautentikasi dan tombol logout sesuai spesifikasi */}
-        <p>Halo, {authedUser?.name}!</p>
-        <button type="button" onClick={onLogout}>
-          Logout
-        </button>
-      </header>
-
-      <main>
-        {/* Tampilan halaman catatan sederhana sesuai instruksi */}
-        <p>hello world</p>
-      </main>
-    </div>
-  );
-}
-
-export default Catatan;
-```
-
----
-
-## ✅ Kriteria Penerimaan yang Terpenuhi
-- [x] **Login Berhasil ➔ Halaman Utama**: Mengisi form login dengan data valid membawa pengguna langsung ke halaman `Catatan.jsx` dan nama pengguna ditampilkan.
-- [x] **Login Gagal**: Data salah menampilkan alert dari server dan pengguna tetap di halaman login.
-- [x] **Penyimpanan Token**: Token tersimpan di `localStorage` melalui fungsi `putAccessToken`.
-- [x] **Persistensi Sesi**: Refresh halaman tidak mengembalikan pengguna ke halaman login (diverifikasi via `getUserLogged()` pada `useEffect`).
-- [x] **Validasi Password Register**: Register dengan password dan confirm password tidak sama akan memunculkan alert dan tidak mengirim request.
-- [x] **Register Berhasil**: Mengarahkan pengguna langsung ke halaman login (`/`).
-- [x] **Proteksi Rute**: Pengguna yang belum login tidak dapat membuka halaman utama (`Catatan.jsx`).
-- [x] **Logout**: Mengosongkan token di `localStorage`, mereset state pengguna, dan mengembalikan tampilan ke halaman login.
-- [x] **Custom Hook `useInput`**: Seluruh input dikelola oleh hook kustom tanpa duplikasi logika event handler.
-- [x] **Bebas CSS**: Tampilan murni menggunakan default HTML styling sesuai aturan spesifikasi.
+- **Refaktorisasi Komponen & Desain Bersih**: Menyatukan header dari keenam halaman ke dalam komponen tunggal `Navbar.jsx` dan menyatukan representasi kartu ke `NoteCard.jsx`.
+- **Eliminasi Gaya CSS Duplikat**: Gaya header pada masing-masing CSS halaman dibersihkan dan dipusatkan pada `index.css`.
+- **Dukungan Penuh Multibahasa**: Mengimplementasikan `LocaleContext`, `LocaleProvider`, dan hook `useLocale` yang mencakup seluruh string antarmuka pengguna tanpa teks statis hard-coded.
+- **Peningkatan UX & Keamanan Aksi**: Penambahan status disable pada FAB halaman detail guna mencegah duplikasi pengiriman aksi arsip atau hapus.
