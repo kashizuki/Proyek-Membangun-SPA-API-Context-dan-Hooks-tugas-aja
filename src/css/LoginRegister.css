@@ -1,0 +1,79 @@
+/* --- 1. Auth Container (Login & Register) --- */
+.auth-container {
+    /* Tata letak di kiri dengan margin & padding agar tidak mentok */
+    margin-top: 40px;
+    margin-left: 48px;
+    padding: 24px;
+
+    /* Ukuran lebar form dikontrol di sini */
+    max-width: 440px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-description {
+    font-size: 15px;
+    color: #334155;
+    margin-bottom: 24px;
+}
+
+/* --- 3. Form Group & Inputs --- */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1e293b;
+}
+
+.form-group input {
+    width: 100%;
+    /* Membuat input lebar memenuhi container */
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+}
+
+/* --- 4. Large Action Button --- */
+.auth-button {
+    width: 100%;
+    /* Tombol dibuat lebar penuh sesuai form */
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #0f172a;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.auth-button:hover {
+    background-color: #1e293b;
+}
+
+/* --- 5. Footer Nav Link --- */
+.auth-footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #475569;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    text-decoration: underline;
+}

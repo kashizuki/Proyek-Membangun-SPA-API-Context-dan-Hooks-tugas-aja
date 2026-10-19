@@ -1,0 +1,154 @@
+/* ==========================================================================
+   1. RESET & GLOBAL STYLES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  /* Latar belakang abu-abu sesuai gambar target */
+  color: #222222;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   2. KONTEN UTAMA (<main>)
+   ========================================================================== */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+main h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #222222;
+}
+
+/* ==========================================================================
+   4. INPUT PENCARIAN (Search Bar Full Width)
+   ========================================================================== */
+input[type='text'].search-bar,
+main>input[type='text'] {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #e8e8e8;
+  border: 1px solid #888888;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #333333;
+  margin-bottom: 32px;
+  outline: none;
+}
+
+input[type='text'].search-bar::placeholder,
+main>input[type='text']::placeholder {
+  color: #666666;
+}
+
+input[type='text'].search-bar:focus,
+main>input[type='text']:focus {
+  border-color: #222222;
+  background-color: #ffffff;
+}
+
+/* ==========================================================================
+   5. DAFTAR KARTU CATATAN (Notes Grid & Cards)
+   ========================================================================== */
+.notes-list,
+main>section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Kartu Catatan dengan aksen border atas tebal */
+article {
+  background-color: #e8e8e8;
+  border: 1px solid #444444;
+  border-top: 5px solid #222222;
+  /* Aksen border atas khas */
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+article h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+article h3 a {
+  color: #222222;
+  text-decoration: underline;
+}
+
+article p.date,
+article p:nth-child(2) {
+  font-size: 0.85rem;
+  color: #666666;
+}
+
+article p.body,
+article p:nth-child(3) {
+  font-size: 0.95rem;
+  color: #333333;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   6. FLOATING ACTION BUTTON (FAB) - Pojok Kanan Bawah
+   ========================================================================== */
+.fab-button,
+main>a>button[aria-label='Tambah catatan'] {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 54px;
+  height: 54px;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.fab-button:hover,
+main>a>button[aria-label='Tambah catatan']:hover {
+  background-color: #444444;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   7. STATUS TAMPILAN (Loading & Empty State)
+   ========================================================================== */
+p.empty-message,
+p.loading-message {
+  text-align: center;
+  color: #666666;
+  font-size: 1.1rem;
+  margin-top: 40px;
+}

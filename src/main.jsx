@@ -1,14 +1,23 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from './contexts/ThemeProvider';
+import { LocaleProvider } from './contexts/LocaleProvider';
 import App from './App.jsx';
+import './index.css';
 
-// Inisialisasi root DOM untuk aplikasi React
-// BrowserRouter membungkus komponen App untuk menyediakan context routing SPA (Single Page Application)
+// Entry point aplikasi:
+// - BrowserRouter: menyediakan routing SPA
+// - ThemeProvider: mengelola state tema global (Dark / Light Mode)
+// - LocaleProvider: mengelola state bahasa global (Indonesia / English)
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <LocaleProvider>
+          <App />
+        </LocaleProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
 );

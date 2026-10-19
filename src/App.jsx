@@ -3,44 +3,49 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Catatan from './pages/Catatan';
+import TambahCatatan from './pages/TambahCatatan';
+import BacaCatatan from './pages/BacaCatatan';
+import Terarsip from './pages/Terarsip';
 import { getUserLogged, putAccessToken } from './utils/network-data';
+import useLocale from './hooks/useLocale';
 
-// Komponen utama aplikasi yang mengelola state autentikasi dan routing aplikasi
+// Komponen utama aplikasi yang mengelola state autentikasi dan routing
 function App() {
-  // A1: State authedUser (data pengguna terautentikasi) dan initializing (status inisialisasi awal)
+  const { t } = useLocale();
+
+  // State authedUser dan flag inisialisasi
   const [authedUser, setAuthedUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
 
-  // A2: Pengecekan token saat aplikasi pertama kali dimuat
+  // Verifikasi token saat pertama kali aplikasi dimuat
   useEffect(() => {
     async function fetchUser() {
       const { data } = await getUserLogged();
       setAuthedUser(data);
       setInitializing(false);
     }
-
     fetchUser();
   }, []);
 
-  // Handler saat login berhasil: simpan accessToken dan set data pengguna
+  // Handler login berhasil: simpan token dan ambil data pengguna
   async function onLoginSuccess({ accessToken }) {
     putAccessToken(accessToken);
     const { data } = await getUserLogged();
     setAuthedUser(data);
   }
 
-  // Handler logout: kosongkan token di localStorage dan reset state authedUser
+  // Handler logout: bersihkan token dan reset state
   function onLogout() {
     putAccessToken('');
     setAuthedUser(null);
   }
 
-  // A3: Tampilkan teks memuat saat masih dalam proses inisialisasi agar halaman tidak berkedip
+  // Tampilkan pesan loading saat inisialisasi
   if (initializing) {
-    return <p>Memuat...</p>;
+    return <p className="loading-message">{t('loading')}</p>;
   }
 
-  // A4: Jika pengguna belum login (authedUser === null), hanya rute login dan register yang tersedia
+  // Rute publik: hanya login dan register
   if (authedUser === null) {
     return (
       <Routes>
@@ -49,20 +54,31 @@ function App() {
           element={<LoginPage onLoginSuccess={onLoginSuccess} />}
         />
         <Route path="/register" element={<RegisterPage />} />
-        {/* Mengarahkan rute yang tidak dikenal kembali ke halaman login */}
         <Route path="/*" element={<Navigate to="/" replace />} />
       </Routes>
     );
   }
 
-  // A5: Jika pengguna sudah login, langsung diarahkan ke halaman Catatan
+  // Rute terproteksi: semua halaman saat pengguna sudah login
   return (
     <Routes>
       <Route
         path="/"
         element={<Catatan authedUser={authedUser} onLogout={onLogout} />}
       />
-      {/* Pengguna yang sudah login diarahkan ke halaman utama jika membuka rute lain seperti /register */}
+      <Route
+        path="/archives"
+        element={<Terarsip authedUser={authedUser} onLogout={onLogout} />}
+      />
+      {/* TambahCatatan juga menerima authedUser & onLogout untuk Navbar */}
+      <Route
+        path="/notes/new"
+        element={<TambahCatatan authedUser={authedUser} onLogout={onLogout} />}
+      />
+      <Route
+        path="/notes/:id"
+        element={<BacaCatatan authedUser={authedUser} onLogout={onLogout} />}
+      />
       <Route path="/*" element={<Navigate to="/" replace />} />
     </Routes>
   );

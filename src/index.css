@@ -1,0 +1,96 @@
+/* ==========================================================================
+   index.css — Entry point styling global aplikasi
+   Mengimpor theme.css untuk mendukung fitur Dark Mode / Light Mode
+   Serta menyediakan styling bersama untuk komponen Navbar
+   ========================================================================== */
+
+@import './css/theme.css';
+
+/* Transisi halus saat beralih antara Light Mode dan Dark Mode */
+html,
+body,
+header,
+main,
+article,
+input,
+textarea,
+button {
+  transition: background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* ==========================================================================
+   NAVBAR BERSAMA (Digunakan di seluruh halaman)
+   ========================================================================== */
+.navbar,
+header.navbar {
+  background-color: var(--bg-header, #ffffff);
+  border-bottom: 1px solid var(--border-color, #b0b0b0);
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar__logo,
+.navbar a.navbar__logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: underline;
+  color: var(--text-primary, #222222);
+}
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar__link,
+.navbar__nav a,
+.navbar__nav button {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #222222);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar__user {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary, #222222);
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar__lang-btn,
+.nav-icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-color, #b0b0b0);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: var(--text-primary, #222222);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.navbar__lang-btn:hover,
+.nav-icon-btn:hover {
+  background-color: rgba(128, 128, 128, 0.15);
+  transform: scale(1.05);
+}

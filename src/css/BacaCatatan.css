@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Stylesheet Halaman Detail Catatan (BacaCatatan.css)
+   Tema diselaraskan sepenuhnya dengan tema Catatan.css
+   ========================================================================== */
+
+/* 1. RESET & GLOBAL STYLES */
+.note-detail-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.note-detail-page a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* 2. AREA KONTEN UTAMA (<main>) */
+
+/* 3. KONTEN UTAMA (<main>) */
+.note-detail-page__main,
+.note-detail-page main {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 16px;
+  flex: 1;
+}
+
+.note-detail-page__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 10px;
+  word-break: break-word;
+}
+
+.note-detail-page__date {
+  font-size: 0.85rem;
+  color: #666666;
+  margin: 0 0 24px;
+  font-weight: 400;
+}
+
+.note-detail-page__body {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #333333;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
+/* 4. STATUS TAMPILAN (Loading & Catatan Tidak Ditemukan) */
+.note-detail-page__status {
+  text-align: center;
+  color: #666666;
+  font-size: 1.1rem;
+  margin-top: 40px;
+}
+
+.note-detail-page__back-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #222222;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+/* 5. FLOATING ACTION BUTTON (FAB) - Pojok Kanan Bawah */
+.note-detail-page__fab-container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 100;
+}
+
+.note-detail-page__fab {
+  width: 54px;
+  height: 54px;
+  background-color: #222222;
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.note-detail-page__fab:hover {
+  background-color: #444444;
+  transform: scale(1.05);
+}
+
+.note-detail-page__fab--archive,
+.note-detail-page__fab--delete {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.note-detail-page__fab--archive:hover,
+.note-detail-page__fab--delete:hover {
+  background-color: #444444;
+}

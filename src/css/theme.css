@@ -1,0 +1,297 @@
+/* ==========================================================================
+   theme.css — Definisi Tema Global (Light Mode & Dark Mode)
+   Sesuai Spesifikasi PRD Fitur Dark Mode Toggle.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS VARIABLES (Mode Terang & Mode Gelap)
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #e8e8e8;
+  --bg-header: #ffffff;
+  --text-primary: #222222;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+  --border-color: #b0b0b0;
+  --border-card: #444444;
+  --border-accent: #222222;
+  --card-bg: #e8e8e8;
+  --input-bg: #e8e8e8;
+  --input-focus-bg: #ffffff;
+  --fab-bg: #222222;
+  --fab-hover-bg: #444444;
+  --fab-text: #ffffff;
+}
+
+[data-theme='dark'] {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-header: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #f0f0f0;
+  --text-muted: #aaaaaa;
+  --border-color: #333333;
+  --border-card: #3a3a3a;
+  --border-accent: #646cff;
+  --card-bg: #1e1e1e;
+  --input-bg: #222222;
+  --input-focus-bg: #2c2c2c;
+  --fab-bg: #2e2e38;
+  --fab-hover-bg: #3f3f4d;
+  --fab-text: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   2. STYLING GLOBAL UNTUK TOMBOL THEME TOGGLE
+   -------------------------------------------------------------------------- */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.35rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  line-height: 1;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.15);
+  background-color: rgba(128, 128, 128, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   3. ATURAN WARNA MODE GELAP ([data-theme='dark'])
+   Menerapkan palet warna Dark Mode sesuai PRD pada seluruh elemen aplikasi
+   -------------------------------------------------------------------------- */
+[data-theme='dark'] body,
+[data-theme='dark'] .note-detail-page,
+[data-theme='dark'] .archives-page,
+[data-theme='dark'] .add-new-page {
+  background-color: #121212 !important;
+  color: #f0f0f0 !important;
+}
+
+/* Header / Navbar */
+[data-theme='dark'] header,
+[data-theme='dark'] .navbar,
+[data-theme='dark'] .archives-page__header,
+[data-theme='dark'] .note-detail-page__header,
+[data-theme='dark'] .app-header {
+  background-color: #1a1a1a !important;
+  border-bottom: 1px solid #333333 !important;
+}
+
+[data-theme='dark'] header h1,
+[data-theme='dark'] header h1 a,
+[data-theme='dark'] .navbar__logo,
+[data-theme='dark'] .archives-page__logo h1,
+[data-theme='dark'] .note-detail-page__logo,
+[data-theme='dark'] .app-header h1 {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] header nav a,
+[data-theme='dark'] header nav button,
+[data-theme='dark'] .navbar__link,
+[data-theme='dark'] .navbar__nav a,
+[data-theme='dark'] .navbar__nav button,
+[data-theme='dark'] .navbar__user,
+[data-theme='dark'] .archives-page__nav a,
+[data-theme='dark'] .archives-page__nav button,
+[data-theme='dark'] .archives-page__nav-link button,
+[data-theme='dark'] .archives-page__logout-btn,
+[data-theme='dark'] .archives-page__user-info,
+[data-theme='dark'] .note-detail-page__nav-link,
+[data-theme='dark'] .note-detail-page__logout-btn,
+[data-theme='dark'] .note-detail-page__user-info,
+[data-theme='dark'] header nav span {
+  color: #f0f0f0 !important;
+}
+
+[data-theme='dark'] .navbar__lang-btn,
+[data-theme='dark'] .nav-icon-btn {
+  color: #f0f0f0 !important;
+  border-color: #444444 !important;
+}
+
+/* Judul Bagian (<main h2>) */
+[data-theme='dark'] main h2,
+[data-theme='dark'] .archives-page__title {
+  color: #ffffff !important;
+}
+
+/* Kolom Pencarian */
+[data-theme='dark'] input[type='text'].search-bar,
+[data-theme='dark'] main > input[type='text'],
+[data-theme='dark'] .archives-page__search-input {
+  background-color: #222222 !important;
+  border: 1px solid #444444 !important;
+  color: #f0f0f0 !important;
+}
+
+[data-theme='dark'] input[type='text'].search-bar::placeholder,
+[data-theme='dark'] main > input[type='text']::placeholder,
+[data-theme='dark'] .archives-page__search-input::placeholder {
+  color: #888888 !important;
+}
+
+[data-theme='dark'] input[type='text'].search-bar:focus,
+[data-theme='dark'] main > input[type='text']:focus,
+[data-theme='dark'] .archives-page__search-input:focus {
+  border-color: #646cff !important;
+  background-color: #2a2a2a !important;
+}
+
+/* Kartu Catatan (Active & Archived Notes) */
+[data-theme='dark'] article,
+[data-theme='dark'] .archives-page__note-item {
+  background-color: #1e1e1e !important;
+  border: 1px solid #333333 !important;
+  border-top: 5px solid #646cff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme='dark'] article h3,
+[data-theme='dark'] article h3 a,
+[data-theme='dark'] .archives-page__note-title,
+[data-theme='dark'] .archives-page__note-title a {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] article p.date,
+[data-theme='dark'] article p:nth-child(2),
+[data-theme='dark'] .archives-page__note-date {
+  color: #aaaaaa !important;
+}
+
+[data-theme='dark'] article p.body,
+[data-theme='dark'] article p:nth-child(3),
+[data-theme='dark'] .archives-page__note-body {
+  color: #e0e0e0 !important;
+}
+
+/* Floating Action Button (FAB) */
+[data-theme='dark'] .fab-button,
+[data-theme='dark'] main > a > button[aria-label='Tambah catatan'],
+[data-theme='dark'] main button[aria-label='Simpan catatan'],
+[data-theme='dark'] .add-new-page__action,
+[data-theme='dark'] .note-detail-page__fab {
+  background-color: #2e2e38 !important;
+  color: #ffffff !important;
+  border: 1px solid #4a4a5a !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme='dark'] .fab-button:hover,
+[data-theme='dark'] main > a > button[aria-label='Tambah catatan']:hover,
+[data-theme='dark'] main button[aria-label='Simpan catatan']:hover,
+[data-theme='dark'] .add-new-page__action:hover,
+[data-theme='dark'] .note-detail-page__fab:hover {
+  background-color: #434354 !important;
+  transform: scale(1.08) !important;
+}
+
+/* Pesan Status & Kosong */
+[data-theme='dark'] p.empty-message,
+[data-theme='dark'] p.loading-message,
+[data-theme='dark'] .archives-page__status,
+[data-theme='dark'] .archives-page__empty,
+[data-theme='dark'] .note-detail-page__status {
+  color: #aaaaaa !important;
+}
+
+/* Halaman Detail Catatan (BacaCatatan) */
+[data-theme='dark'] .note-detail-page__title {
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .note-detail-page__date {
+  color: #aaaaaa !important;
+}
+
+[data-theme='dark'] .note-detail-page__body {
+  color: #e0e0e0 !important;
+}
+
+[data-theme='dark'] .note-detail-page__back-link {
+  color: #8c93ff !important;
+}
+
+/* Halaman Tambah Catatan (TambahCatatan) */
+[data-theme='dark'] main input[type='text'],
+[data-theme='dark'] .add-new-page__input__title {
+  background-color: #222222 !important;
+  border: 1px solid #444444 !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] main input[type='text']::placeholder,
+[data-theme='dark'] .add-new-page__input__title::placeholder {
+  color: #777777 !important;
+}
+
+[data-theme='dark'] main input[type='text']:focus,
+[data-theme='dark'] .add-new-page__input__title:focus {
+  border-color: #646cff !important;
+  background-color: #2a2a2a !important;
+}
+
+[data-theme='dark'] main textarea,
+[data-theme='dark'] .add-new-page__input__body {
+  background-color: #222222 !important;
+  border: 1px solid #444444 !important;
+  color: #e0e0e0 !important;
+}
+
+[data-theme='dark'] main textarea::placeholder,
+[data-theme='dark'] .add-new-page__input__body::placeholder {
+  color: #777777 !important;
+}
+
+[data-theme='dark'] main textarea:focus,
+[data-theme='dark'] .add-new-page__input__body:focus {
+  border-color: #646cff !important;
+  background-color: #2a2a2a !important;
+}
+
+/* Halaman Login & Register */
+[data-theme='dark'] .auth-description {
+  color: #cccccc !important;
+}
+
+[data-theme='dark'] .form-group label {
+  color: #f0f0f0 !important;
+}
+
+[data-theme='dark'] .form-group input {
+  background-color: #222222 !important;
+  border: 1px solid #444444 !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .form-group input:focus {
+  border-color: #646cff !important;
+}
+
+[data-theme='dark'] .auth-button {
+  background-color: #646cff !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .auth-button:hover {
+  background-color: #535bf2 !important;
+}
+
+[data-theme='dark'] .auth-footer {
+  color: #aaaaaa !important;
+}
+
+[data-theme='dark'] .auth-footer a {
+  color: #8c93ff !important;
+}

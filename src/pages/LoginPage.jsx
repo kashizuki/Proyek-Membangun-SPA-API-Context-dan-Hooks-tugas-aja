@@ -1,27 +1,25 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import useInput from '../hooks/useInput';
+import useLocale from '../hooks/useLocale';
 import { login } from '../utils/network-data';
+import '../css/LoginRegister.css';
 
-// Komponen fungsional untuk Halaman Login Aplikasi Catatan
-// Dilengkapi logic controlled input, submit handler, dan pemanggilan API login
+// Halaman Login
 function LoginPage({ onLoginSuccess }) {
-  // Controlled input hooks menggunakan custom hook useInput
+  const { t } = useLocale();
   const [email, handleEmailChange] = useInput('');
   const [password, handlePasswordChange] = useInput('');
   const [loading, setLoading] = useState(false);
 
-  // Handler saat form login disubmit
+  // Handler submit form login
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
-
-    // Memanggil API login dari network-data.js
+    // Pesan error login berasal dari network-data.js (bawaan Dicoding)
     const { error, data } = await login({ email, password });
-
     setLoading(false);
-
-    // Jika berhasil (tidak error), teruskan data token ke handler onLoginSuccess di App
     if (!error) {
       onLoginSuccess(data);
     }
@@ -29,57 +27,45 @@ function LoginPage({ onLoginSuccess }) {
 
   return (
     <div>
-      {/* 1. Header: Judul aplikasi */}
-      <header>
-        <h1>Aplikasi Catatan</h1>
-      </header>
+      {/* Navbar tanpa authedUser: hanya logo, ThemeToggle, dan ganti bahasa */}
+      <Navbar />
 
-      {/* Konten Utama */}
-      <main>
-        {/* 2. Pesan ajakan login */}
-        <p>Yuk, login untuk menggunakan aplikasi.</p>
+      <main className="auth-container">
+        <p className="auth-description">{t('loginPrompt')}</p>
 
-        {/* 3. Form Login */}
         <form onSubmit={handleSubmit}>
-          {/* Kolom input Email */}
-          <div>
-            <label htmlFor="email">Email</label>
-            <br />
+          <div className="form-group">
+            <label htmlFor="email">{t('email')}</label>
             <input
               type="email"
               id="email"
               name="email"
-              size="40"
               value={email}
               onChange={handleEmailChange}
               required
             />
           </div>
 
-          {/* Kolom input Password */}
-          <div>
-            <label htmlFor="password">Password</label>
-            <br />
+          <div className="form-group">
+            <label htmlFor="password">{t('password')}</label>
             <input
               type="password"
               id="password"
               name="password"
-              size="40"
               value={password}
               onChange={handlePasswordChange}
               required
             />
           </div>
 
-          {/* 4. Tombol submit Login (disabled saat proses loading untuk cegah request ganda) */}
-          <button type="submit" disabled={loading}>
-            {loading ? 'Memuat...' : 'Login'}
+          {/* Tombol submit — disabled saat loading */}
+          <button type="submit" className="auth-button" disabled={loading}>
+            {loading ? t('loading') : t('login')}
           </button>
         </form>
 
-        {/* 5. Tautan navigasi SPA ke halaman registrasi */}
-        <p>
-          Belum punya akun? <Link to="/register">Daftar di sini</Link>
+        <p className="auth-footer">
+          {t('noAccount')} <Link to="/register">{t('registerHere')}</Link>
         </p>
       </main>
     </div>
